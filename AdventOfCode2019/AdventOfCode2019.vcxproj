@@ -76,7 +76,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>..\AdventLib;$(IncludePath)</IncludePath>
+    <IncludePath>..\HelperLib;..\AdventLib;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -214,6 +214,9 @@
   <ItemGroup>
     <ProjectReference Include="..\AdventLib\AdventLib.vcxproj">
       <Project>{9b486374-0383-4263-8c68-207ea38c24b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\HelperLib\HelperLib.vcxproj">
+      <Project>{b143dcfa-5b8c-4194-bc6b-bd39aefd50bd}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

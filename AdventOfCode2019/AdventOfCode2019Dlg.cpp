@@ -11,10 +11,16 @@
 #include "CounterUpper.h"
 #include "Module.h"
 
+#include "Intcode.h"
+#include "IntcodeProcessor.h"
+
+#include "Generic.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
+#define SIZEOF_UINT(x) sizeof(x)/sizeof(unsigned int)
 
 // CAboutDlg dialog used for App About
 
@@ -69,6 +75,7 @@ BEGIN_MESSAGE_MAP(CAdventOfCode2019Dlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CAdventOfCode2019Dlg::OnBnClickedOk)
+	ON_BN_CLICKED(btn_ProcessIntcode, &CAdventOfCode2019Dlg::OnBnClickedProcessintcode)
 END_MESSAGE_MAP()
 
 
@@ -164,7 +171,7 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 	// TODO: Add your control notification handler code here
 	CounterUpper cu;
 
-	for (int i = 0; i < sizeof(MassConstants) / sizeof(unsigned int); ++i)
+	for (int i = 0; i < SIZEOF_UINT(MassConstants); ++i)
 	{
 		cu.AddModule(Module(MassConstants[i]));
 	}
@@ -172,4 +179,13 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 
 	t.Format(L"%d", cu.GetTotalFuel());
 	SetDlgItemTextW(txtCUFuel, t);
+}
+
+
+void CAdventOfCode2019Dlg::OnBnClickedProcessintcode()
+{
+	unsigned int size = SIZEOF_UINT(Intcode);
+	Process::process(Intcode, size);
+	
+	SetDlgItemTextW(txtIntcode, Generic::ToCommaSeparated(Intcode, size));
 }
