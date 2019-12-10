@@ -168,8 +168,8 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 	{
 		cu.AddModule(Module(MassConstants[i]));
 	}
-	CString t;
+	CStringW t;
 
-	t.Format(_T("%d"), cu.GetTotalFuel());
-	SetDlgItemText(txtCUFuel, t);
+	t.Format(L"%d", cu.GetTotalFuel());
+	SetDlgItemTextW(txtCUFuel, t);
 }
