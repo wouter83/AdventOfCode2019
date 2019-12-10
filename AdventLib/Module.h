@@ -7,6 +7,8 @@ public:
 	unsigned int FuelRequired();
 	void SetId(unsigned int id) { mId = id; }
 	unsigned int GetMass() { return mMass; }
+	int calculateFuel(unsigned int mass);
+	unsigned int calculateTotalFuel(unsigned int mass);
 
 private:
 	unsigned int mId;
