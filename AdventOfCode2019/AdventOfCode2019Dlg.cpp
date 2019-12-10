@@ -7,6 +7,10 @@
 #include "AdventOfCode2019Dlg.h"
 #include "afxdialogex.h"
 
+#include "MassConstant.h"
+#include "CounterUpper.h"
+#include "Module.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -64,6 +68,7 @@ BEGIN_MESSAGE_MAP(CAdventOfCode2019Dlg, CDialogEx)
 	ON_WM_SYSCOMMAND()
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDOK, &CAdventOfCode2019Dlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -152,3 +157,19 @@ HCURSOR CAdventOfCode2019Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+
+void CAdventOfCode2019Dlg::OnBnClickedOk()
+{
+	// TODO: Add your control notification handler code here
+	CounterUpper cu;
+
+	for (int i = 0; i < sizeof(MassConstants) / sizeof(unsigned int); ++i)
+	{
+		cu.AddModule(Module(MassConstants[i]));
+	}
+	CString t;
+
+	t.Format(_T("%d"), cu.GetTotalFuel());
+	SetDlgItemText(txtCUFuel, t);
+}
