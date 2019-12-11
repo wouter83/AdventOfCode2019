@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include <afx.h>
+#include <vector>
 
 #include "IntcodeProcessor.h"
 #include "Generic.h"
@@ -49,8 +50,13 @@ namespace Test_1202
 			unsigned int test1[] = { 2,4,4,5,99,0 };
 			unsigned int reslt1[] = { 2,4,4,5,99,9801 };
 			unsigned int size = sizeof(test1) / sizeof(unsigned int);
-			Process::process(test1, size);
-			test(reslt1, test1, size);
+
+			std::vector<unsigned int> tmp;
+			for (unsigned int k = 0; k < size; ++k)
+				tmp.push_back(test1[k]);
+
+			Process::process(tmp);
+			test(reslt1, &tmp[0], size);
 		}
 		TEST_METHOD(Intcode4)
 		{
@@ -62,6 +68,33 @@ namespace Test_1202
 
 			CStringW rslt("30,1,1,4,2,5,6,0,99");
 			Assert::AreEqual(rslt.GetString(), Generic::ToCommaSeparated(test1, size).GetString());
+		}
+		
+		TEST_METHOD(Intcode5)
+		{
+			unsigned int test1[] = { 1,11,1,4,99,5,6,0,99 };
+			unsigned int size = sizeof(test1) / sizeof(unsigned int);
+			int ret = Process::process(test1, size);
+
+			Assert::AreEqual(-2, ret);
+		}
+
+		TEST_METHOD(Intcode6)
+		{
+			unsigned int test1[] = { 1,1,10,4,99,5,6,0,99 };
+			unsigned int size = sizeof(test1) / sizeof(unsigned int);
+			int ret = Process::process(test1, size);
+
+			Assert::AreEqual(-2, ret);
+		}
+		
+		TEST_METHOD(Intcode7)
+		{
+			unsigned int test1[] = { 1,1,1,10,99,5,6,0,99 };
+			unsigned int size = sizeof(test1) / sizeof(unsigned int);
+			int ret = Process::process(test1, size);
+
+			Assert::AreEqual(-2, ret);
 		}
 	};
 }

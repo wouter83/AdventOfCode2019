@@ -184,16 +184,34 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 
 void CAdventOfCode2019Dlg::OnBnClickedProcessintcode()
 {
-	unsigned int size = SIZEOF_UINT(Intcode);
-	// 2-1 additional requirements
-	Intcode[1] = 12;
-	Intcode[2] = 2;
-	Process::process(Intcode, size);
+	unsigned int size = SIZEOF_UINT(Intcode), toFind = 19690720, noun, verb, result;
+	std::vector<unsigned int> tmp;
+	bool found = false;
+
+	for (noun = 0; noun < 100; ++noun)
+	{
+		for (verb = 0; verb < 100; ++verb)
+		{
+			tmp.clear();
+			for (unsigned int k = 0; k < size; ++k)
+				tmp.push_back(Intcode[k]);
+			tmp[1] = noun;
+			tmp[2] = verb;
+			int procres = Process::process(tmp);
+			if (procres < 0) {
+				continue;
+			}
+			if (tmp[0] == toFind) {
+				found = true;
+				break;
+			}
+		}
+		if (found) break;
+	}
+	
+	result = (100 * noun) + verb;
 
 	CStringW t;
-
-	t.Format(L"%d", Intcode[0]);
+	t.Format(L"%d", result);
 	SetDlgItemTextW(txtIntcode, t);
-
-
 }
