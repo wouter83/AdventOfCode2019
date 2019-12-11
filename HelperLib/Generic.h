@@ -1,5 +1,5 @@
 #pragma once
-#include <atlstr.h>
+#include <afx.h>
 
 class Generic
 {

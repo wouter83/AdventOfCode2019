@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include <atlstr.h>
+#include <afx.h>
 
 #include "IntcodeProcessor.h"
 #include "Generic.h"
@@ -59,6 +59,9 @@ namespace Test_1202
 			unsigned int size = sizeof(test1) / sizeof(unsigned int);
 			Process::process(test1, size);
 			test(reslt1, test1, size);
+
+			CStringW rslt("30,1,1,4,2,5,6,0,99");
+			Assert::AreEqual(rslt.GetString(), Generic::ToCommaSeparated(test1, size).GetString());
 		}
 	};
 }

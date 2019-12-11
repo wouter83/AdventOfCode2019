@@ -185,7 +185,15 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 void CAdventOfCode2019Dlg::OnBnClickedProcessintcode()
 {
 	unsigned int size = SIZEOF_UINT(Intcode);
+	// 2-1 additional requirements
+	Intcode[1] = 12;
+	Intcode[2] = 2;
 	Process::process(Intcode, size);
-	
-	SetDlgItemTextW(txtIntcode, Generic::ToCommaSeparated(Intcode, size));
+
+	CStringW t;
+
+	t.Format(L"%d", Intcode[0]);
+	SetDlgItemTextW(txtIntcode, t);
+
+
 }
