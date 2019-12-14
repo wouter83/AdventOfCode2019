@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CounterUpper.h" />
+    <ClInclude Include="CrossedWires.h" />
     <ClInclude Include="Intcode.h" />
     <ClInclude Include="MassConstant.h" />
     <ClInclude Include="Module.h" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CounterUpper.cpp" />
+    <ClCompile Include="CrossedWires.cpp" />
     <ClCompile Include="Module.cpp" />
     <ClCompile Include="IntcodeProcessor.cpp" />
     <ClCompile Include="stdafx.cpp">
