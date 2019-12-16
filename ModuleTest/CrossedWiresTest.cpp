@@ -49,13 +49,21 @@ namespace CrossedWireTest
 				}
 			}
 		}
+
+		TEST_METHOD(loadWire)
+		{
+			std::string wire1 = "R8,U5,L5,D3";
+			std::string wire2 = "U7,R6,D4,L4";
+			CrossedWires wire;
+			wire.LoadWires(wire1, wire2);
+		}
+
 		TEST_METHOD(addWire)
 		{
 			std::string wire1 = "R8,U5,L5,D3";
 			std::string wire2 = "U7,R6,D4,L4";
 			CrossedWires wire;
-			wire.AddWire(wire1, 'a');
-			wire.AddWire(wire2, 'b');
+			wire.LoadWires(wire1, wire2);
 
 			std::vector<std::vector<char>> grid = wire.GetGrid();
 			Assert::AreEqual('O', grid[0][0]); // 0,0 = '0'
@@ -110,21 +118,46 @@ namespace CrossedWireTest
 		
 		TEST_METHOD(addWire2)
 		{
-			std::string wire1 = "R75,D30,R83,U83,L12,D49,R71,U7,L72";
-			std::string wire2 = "U62,R66,U55,R34,D71,R55,D58,R83";
-			CrossedWires wire;
-			wire.AddWire(wire1, 'a');
-			wire.AddWire(wire2, 'b');
+			std::string wire1 = "R3,D2,L5";
+			std::string wire2 = "U1,L1,D4";
 
-			Assert::AreEqual(159, wire.LengthClosedCrossed());
+			CrossedWires wire;
+
+			wire.LoadWires(wire1, wire2);
+			Assert::AreEqual(3, wire.LengthClosedCrossed());
+
+		}
+
+		TEST_METHOD(addWire2a)
+		{
+			std::string wire1 = "R2,D2,L4,U4"; 
+			std::string wire2 = "U3,L3,D1,R1";
+
+			CrossedWires wire;
+
+			wire.LoadWires(wire1, wire2);
+			Assert::AreEqual(4, wire.LengthClosedCrossed());
+
 		}
 		TEST_METHOD(addWire3)
 		{
-			std::string wire1 = "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51";
-			std::string wire2 = "98,R91,D20,R16,D67,R40,U7,R15,U6,R7";
+			std::string wire1 = "R75,D30,R83,U83,L12,D49,R71,U7,L72"; // col = 134, row = 
+			std::string wire2 = "U62,R66,U55,R34,D71,R55,D58,R83";
 			CrossedWires wire;
-			wire.AddWire(wire1, 'a');
-			wire.AddWire(wire2, 'b');
+
+			wire.LoadWires(wire1, wire2);
+
+			std::vector<std::vector<char>> grid = wire.GetGrid();
+
+			wire.LengthClosedCrossed();
+			Assert::AreEqual(159, wire.LengthClosedCrossed());
+		}
+		TEST_METHOD(addWire4)
+		{
+			std::string wire1 = "R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51";
+			std::string wire2 = "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7";
+			CrossedWires wire;
+			wire.LoadWires(wire1, wire2);
 
 			Assert::AreEqual(135, wire.LengthClosedCrossed());
 		}
