@@ -11,12 +11,21 @@ public:
 		char command;
 		unsigned int count;
 	}; 
+	struct Item {
+		Item(char c, int i) :line(c), steps(i) {};
+		char line;
+		int steps;
+		bool operator==(Item a) const {
+			if (a.line == this->line && a.steps == this->steps) return true;
+			return false;
+		}
+	};
 	
 	CrossedWires();
 	void AddRow(int count);
 	void AddColumn(int count);
 	bool AddWire(std::vector< CrossedWires::Command> cmd, char c);
-	std::vector<std::vector<char>>& GetGrid();
+	std::vector<std::vector<Item>>& GetGrid();
 
 	int LengthClosedCrossed();
 	void LoadWires(std::string& a, std::string& b);
@@ -27,7 +36,7 @@ private:
 	void AddChar(unsigned int x, unsigned int y, char c);
 	std::vector<Command> parse(std::string& str);
 
-	std::vector<std::vector<char>> mGrid;
+	std::vector<std::vector<Item>> mGrid;
 	unsigned int mColSize = 0;
 	unsigned int mRowSize = 0;
 

@@ -5,8 +5,8 @@
 
 CrossedWires::CrossedWires()
 {
-	std::vector<char> vect;
-	vect.resize(1, '0');
+	std::vector<Item> vect;
+	vect.resize(1, Item('0',0));
 	mGrid.push_back(vect);
 }
 
@@ -15,8 +15,8 @@ void CrossedWires::AddRow(int count)
 	//get amount of columns
 	size_t columns = mGrid.begin()->size();
 	for (int i = 0; i < count; ++i) {
-		std::vector<char> vect;
-		vect.resize(columns, '0');
+		std::vector<Item> vect;
+		vect.resize(columns, Item('0', 0));
 		mGrid.push_back(vect);
 	}
 }
@@ -24,9 +24,9 @@ void CrossedWires::AddRow(int count)
 void CrossedWires::AddColumn(int count)
 {
 	
-	for (std::vector< std::vector<char> >::iterator it = mGrid.begin(); it != mGrid.end(); ++it) {
+	for (std::vector< std::vector<Item> >::iterator it = mGrid.begin(); it != mGrid.end(); ++it) {
 		
-		it->resize(it->size() + count,'0');
+		it->resize(it->size() + count, Item('0', 0));
 	}
 }
  
@@ -92,7 +92,7 @@ void CrossedWires::AddColumn(int count)
 	 mNilPointY = abs(sizeColMin);
 	 mClosedCross = mGrid[0].size() + mGrid.size();
 
-	 mGrid[mNilPointX][mNilPointY] = 'O';
+	 mGrid[mNilPointX][mNilPointY].line = 'O';
 
 	 AddWire(commandsA, 'a');
 	 AddWire(commandsB, 'b');
@@ -133,21 +133,6 @@ void CrossedWires::AddColumn(int count)
 	 }
  }
 
-void CrossedWires::AddChar(unsigned int x, unsigned int y, char c)
-{
-	if (mGrid[x][y] == '0' || mGrid[x][y] == c)
-		mGrid[x][y] = c;
-	else
-	{
-		mGrid[x][y] = 'X';
-		unsigned int rowsToNil = abs(static_cast<int>(mNilPointX - x));
-		unsigned int colsToNil = abs(static_cast<int>(mNilPointY - y));
-
-		if (mClosedCross > rowsToNil + colsToNil)
-			mClosedCross = rowsToNil + colsToNil;
-	}
-
-}
 
 bool CrossedWires::AddWire(std::vector< CrossedWires::Command> commands, char c)
 {
@@ -155,36 +140,43 @@ bool CrossedWires::AddWire(std::vector< CrossedWires::Command> commands, char c)
 	for (std::vector< CrossedWires::Command >::iterator it = commands.begin(); it != commands.end(); ++it)
 	{
 		CrossedWires::Command cmd = (*it);
-		switch (cmd.command)
+
+		for (unsigned int i = 1; i <= cmd.count; ++i)
 		{
-		case 'U':
-				
-			for (unsigned int i = 1; i <= cmd.count; ++i) {
-				AddChar(curRow + i, curCol, c);
+
+			switch (cmd.command)
+			{
+				case 'U':
+					curRow++;
+					break;
+				case 'D':
+					curRow--;
+					break;
+				case 'L':
+					curCol--;
+					break;
+				case 'R':
+					curCol++;
+					break;
+				default:
+					break;
+
 			}
-			curRow += cmd.count;
-			break;
-		case 'D':
-			for (unsigned int i = 1; i <= cmd.count; ++i) {
-				AddChar(curRow - i, curCol, c);
+
+			if (mGrid[curRow][curCol].line == '0' || mGrid[curRow][curCol].steps < 0)
+				mGrid[curRow][curCol] = Item(c,i);
+			else
+			{
+				mGrid[curRow][curCol] = Item('X',i);
+				unsigned int rowsToNil = abs(static_cast<int>(mNilPointX - curRow));
+				unsigned int colsToNil = abs(static_cast<int>(mNilPointY - curCol));
+
+				if (mClosedCross > rowsToNil + colsToNil)
+					mClosedCross = rowsToNil + colsToNil;
+
+				mCross[mGrid[curRow][curCol].steps] = i;
 			}
-			curRow -= cmd.count;
-			break; 
-		case 'L':
-			for (unsigned int i = 1; i <= cmd.count; ++i) {
-				AddChar(curRow, curCol -i, c);
-			}
-			curCol -= cmd.count;
-			break;
-		case 'R':
-			
-			for (unsigned int i = 1; i <= cmd.count; ++i) {
-				AddChar(curRow, curCol + i, c);
-			}
-			curCol += cmd.count;
-			break;
-		default:
-			break;
+
 		}
 		
 	}
@@ -192,7 +184,7 @@ bool CrossedWires::AddWire(std::vector< CrossedWires::Command> commands, char c)
 	return false;
 }
 
-std::vector<std::vector<char>>& CrossedWires::GetGrid()
+std::vector<std::vector<CrossedWires::Item>>& CrossedWires::GetGrid()
 {
 	return mGrid;
 }

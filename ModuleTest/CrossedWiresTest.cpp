@@ -12,23 +12,23 @@ namespace CrossedWireTest
 		TEST_METHOD(Init)
 		{
 			CrossedWires wire;
-			std::vector<std::vector<char>> grid = wire.GetGrid();
+			std::vector<std::vector<CrossedWires::Item>> grid = wire.GetGrid();
 			Assert::AreEqual(static_cast<size_t>(1), grid.size()); // 1 row
 			Assert::AreEqual(static_cast<size_t>(1), grid[0].size()); // 1 column
-			Assert::AreEqual('0', grid[0][0]); // 1 column
+			Assert::AreEqual('0', grid[0][0].line); // 1 column
 		}
 		TEST_METHOD(addColumns)
 		{
 			CrossedWires wire;
 			wire.AddColumn(3);
-			std::vector<std::vector<char>> grid = wire.GetGrid();
+			std::vector<std::vector<CrossedWires::Item>> grid = wire.GetGrid();
 			Assert::AreEqual(static_cast<size_t>(1), grid.size()); // 1 row
 			Assert::AreEqual(static_cast<size_t>(4), grid[0].size()); // 1 + 3 columns
 
 
-			for (std::vector< std::vector<char> >::iterator it = grid.begin(); it != grid.end(); ++it) {
-				for (std::vector<char>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
-					Assert::AreEqual('0', (*it2));
+			for (std::vector< std::vector<CrossedWires::Item> >::iterator it = grid.begin(); it != grid.end(); ++it) {
+				for (std::vector<CrossedWires::Item>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
+					Assert::AreEqual('0', (*it2).line);
 				}
 			}
 		}
@@ -38,14 +38,14 @@ namespace CrossedWireTest
 			wire.AddColumn(3);
 			wire.AddRow(4);
 
-			std::vector<std::vector<char>> grid = wire.GetGrid();
+			std::vector<std::vector<CrossedWires::Item>> grid = wire.GetGrid();
 			Assert::AreEqual(static_cast<size_t>(5), grid.size()); // 1 + 4 row
 			Assert::AreEqual(static_cast<size_t>(4), grid[0].size()); // 1 + 3 columns
 
 
-			for (std::vector< std::vector<char> >::iterator it = grid.begin(); it != grid.end(); ++it) {
-				for (std::vector<char>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
-					Assert::AreEqual('0', (*it2));
+			for (std::vector< std::vector<CrossedWires::Item> >::iterator it = grid.begin(); it != grid.end(); ++it) {
+				for (std::vector<CrossedWires::Item>::iterator it2 = (*it).begin(); it2 != (*it).end(); ++it2) {
+					Assert::AreEqual('0', (*it2).line);
 				}
 			}
 		}
@@ -65,53 +65,53 @@ namespace CrossedWireTest
 			CrossedWires wire;
 			wire.LoadWires(wire1, wire2);
 
-			std::vector<std::vector<char>> grid = wire.GetGrid();
-			Assert::AreEqual('O', grid[0][0]); // 0,0 = '0'
-			Assert::AreEqual('a', grid[0][1]);
-			Assert::AreEqual('a', grid[0][2]);
-			Assert::AreEqual('a', grid[0][3]);
-			Assert::AreEqual('a', grid[0][4]);
-			Assert::AreEqual('a', grid[0][5]);
-			Assert::AreEqual('a', grid[0][6]);
-			Assert::AreEqual('a', grid[0][7]);
-			Assert::AreEqual('a', grid[0][8]);
-			Assert::AreEqual('a', grid[1][8]);
-			Assert::AreEqual('a', grid[2][8]);
-			Assert::AreEqual('a', grid[3][8]);
-			Assert::AreEqual('a', grid[4][8]);
-			Assert::AreEqual('a', grid[5][8]);
-			Assert::AreEqual('a', grid[5][7]);
-			Assert::AreEqual('X', grid[5][6]);
-			Assert::AreEqual('a', grid[5][5]);
-			Assert::AreEqual('a', grid[5][4]);
-			Assert::AreEqual('a', grid[5][3]);
-			Assert::AreEqual('a', grid[4][3]);
-			Assert::AreEqual('X', grid[3][3]);
-			Assert::AreEqual('a', grid[2][3]);
+			std::vector<std::vector<CrossedWires::Item>> grid = wire.GetGrid();
+			Assert::AreEqual('O', grid[0][0].line); // 0,0 = '0'
+			Assert::AreEqual('a', grid[0][1].line);
+			Assert::AreEqual('a', grid[0][2].line);
+			Assert::AreEqual('a', grid[0][3].line);
+			Assert::AreEqual('a', grid[0][4].line);
+			Assert::AreEqual('a', grid[0][5].line);
+			Assert::AreEqual('a', grid[0][6].line);
+			Assert::AreEqual('a', grid[0][7].line);
+			Assert::AreEqual('a', grid[0][8].line);
+			Assert::AreEqual('a', grid[1][8].line);
+			Assert::AreEqual('a', grid[2][8].line);
+			Assert::AreEqual('a', grid[3][8].line);
+			Assert::AreEqual('a', grid[4][8].line);
+			Assert::AreEqual('a', grid[5][8].line);
+			Assert::AreEqual('a', grid[5][7].line);
+			Assert::AreEqual('X', grid[5][6].line);
+			Assert::AreEqual('a', grid[5][5].line);
+			Assert::AreEqual('a', grid[5][4].line);
+			Assert::AreEqual('a', grid[5][3].line);
+			Assert::AreEqual('a', grid[4][3].line);
+			Assert::AreEqual('X', grid[3][3].line);
+			Assert::AreEqual('a', grid[2][3].line);
 			
 			//std::string wire2 = "U7,R6,D4,L4";
 			//
-			Assert::AreEqual('b', grid[1][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[2][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[3][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[4][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[5][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[6][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][0]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][1]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][2]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][3]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][4]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][5]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[7][6]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[6][6]); // 0,0 = '0'
-			Assert::AreEqual('X', grid[5][6]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[4][6]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[3][6]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[3][5]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[3][4]); // 0,0 = '0'
-			Assert::AreEqual('X', grid[3][3]); // 0,0 = '0'
-			Assert::AreEqual('b', grid[3][2]); // 0,0 = '0'
+			Assert::AreEqual('b', grid[1][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[2][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[3][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[4][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[5][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[6][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][0].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][1].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][2].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][3].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][4].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][5].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[7][6].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[6][6].line); // 0,0 = '0'
+			Assert::AreEqual('X', grid[5][6].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[4][6].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[3][6].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[3][5].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[3][4].line); // 0,0 = '0'
+			Assert::AreEqual('X', grid[3][3].line); // 0,0 = '0'
+			Assert::AreEqual('b', grid[3][2].line); // 0,0 = '0'
 
 			Assert::AreEqual(6, wire.LengthClosedCrossed());
 		}
@@ -147,7 +147,7 @@ namespace CrossedWireTest
 
 			wire.LoadWires(wire1, wire2);
 
-			std::vector<std::vector<char>> grid = wire.GetGrid();
+			std::vector<std::vector<CrossedWires::Item>> grid = wire.GetGrid();
 
 			wire.LengthClosedCrossed();
 			Assert::AreEqual(159, wire.LengthClosedCrossed());
