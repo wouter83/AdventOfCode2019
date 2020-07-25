@@ -12,6 +12,7 @@
 #define txtIntcode                      1002
 #define IDC_BUTTON1                     1003
 #define txtCalcWires                    1004
+#define txtCalcWires2                   1005
 
 // Next default values for new objects
 // 

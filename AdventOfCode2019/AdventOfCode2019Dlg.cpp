@@ -227,6 +227,16 @@ void CAdventOfCode2019Dlg::OnBnClickedButton1()
 	wire.LoadWires(wire1, wire2);
 
 	CStringW t;
-	t.Format(L"%d", wire.LengthClosedCrossed());
+	int nearestCross;
+	int shortestCross;
+
+	wire.RunWires(nearestCross, shortestCross);
+	t.Format(L"%d", shortestCross);
 	SetDlgItemTextW(txtCalcWires, t);
+
+	t.Format(L"%d", nearestCross);
+	SetDlgItemTextW(txtCalcWires2, t);
+
 }
+
+

@@ -2,37 +2,37 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <algorithm>
+
+#include "Point.h"
+#include "Segment.h"
+
 
 
 class CrossedWires
 {
-public:
 	struct Command {
 		char command;
 		unsigned int count;
-	}; 
-	
-	CrossedWires();
-	void AddRow(int count);
-	void AddColumn(int count);
-	bool AddWire(std::vector< CrossedWires::Command> cmd, char c);
-	std::vector<std::vector<char>>& GetGrid();
+	};
 
-	int LengthClosedCrossed();
+public:
+
+	CrossedWires() {};
+
+	bool RunWires(int& closedCross, int& shortestCross);
 	void LoadWires(std::string& a, std::string& b);
 
-	void GetMinMax(std::vector<CrossedWires::Command>& commandsA, int& sizeRowMax, int& sizeRowMin, int& sizeColMax, int& sizeColMin);
+	bool AddWire(std::vector<Command> commands, std::vector<Segment>& wire);
 
 private:
-	void AddChar(unsigned int x, unsigned int y, char c);
 	std::vector<Command> parse(std::string& str);
+	bool intersection(Segment& segA, Segment& segB, Point& intersect);
+	int manhattLength(const Point& a, const Point& b);
 
-	std::vector<std::vector<char>> mGrid;
 	unsigned int mColSize = 0;
 	unsigned int mRowSize = 0;
 
-	unsigned int mNilPointX, mNilPointY = 0;
-	std::map<int, int> mCross;
-	unsigned int mClosedCross;
+	std::vector<Segment> wireA;
+	std::vector<Segment> wireB;
 };
-
