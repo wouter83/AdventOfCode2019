@@ -81,6 +81,7 @@ BEGIN_MESSAGE_MAP(CAdventOfCode2019Dlg, CDialogEx)
 	ON_BN_CLICKED(btn_ProcessIntcode, &CAdventOfCode2019Dlg::OnBnClickedProcessintcode)
 	ON_BN_CLICKED(IDC_BUTTON1, &CAdventOfCode2019Dlg::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CAdventOfCode2019Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON3, &CAdventOfCode2019Dlg::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -189,8 +190,8 @@ void CAdventOfCode2019Dlg::OnBnClickedOk()
 
 void CAdventOfCode2019Dlg::OnBnClickedProcessintcode()
 {
-	unsigned int size = SIZEOF_UINT(Intcode), toFind = 19690720, noun, verb, result;
-	std::vector<unsigned int> tmp;
+	unsigned int size = SIZEOF_UINT(Intcode_D2), toFind = 19690720, noun, verb, result;
+	std::vector<int> tmp;
 	bool found = false;
 
 	for (noun = 0; noun < 100; ++noun)
@@ -199,10 +200,11 @@ void CAdventOfCode2019Dlg::OnBnClickedProcessintcode()
 		{
 			tmp.clear();
 			for (unsigned int k = 0; k < size; ++k)
-				tmp.push_back(Intcode[k]);
+				tmp.push_back(Intcode_D2[k]);
 			tmp[1] = noun;
 			tmp[2] = verb;
-			int procres = Process::process(tmp);
+			std::vector<int> output;
+			int procres = Process::process(tmp, output);
 			if (procres < 0) {
 				continue;
 			}
@@ -257,4 +259,22 @@ void CAdventOfCode2019Dlg::OnBnClickedButton2()
 	t.Format(L"%d", count);
 	SetDlgItemTextW(txtPasswordRetries, t);
 
+}
+
+
+void CAdventOfCode2019Dlg::OnBnClickedButton3()
+{
+	unsigned int size = SIZEOF_UINT(Intcode_D5);
+	std::vector<int> tmp;
+	for (unsigned int k = 0; k < size; ++k)
+		tmp.push_back(Intcode_D5[k]);
+	int input = 1;
+	std::vector<int> output;
+	int procres = Process::process(tmp, output, input);
+	if (procres == 0)
+	{
+		CStringW t;
+		t.Format(L"%d", output[output.size()-1]);
+		SetDlgItemTextW(txtIntcode2, t);
+	}
 }
