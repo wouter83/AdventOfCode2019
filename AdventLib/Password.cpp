@@ -1,6 +1,11 @@
 #include "stdafx.h"
 #include "Password.h"
 
+bool Password::boundarycheck(int number)
+{
+	return number > 1 && number % 2 == 0 && number / 2 == 1;
+}
+
 bool Password::Verify(std::string& str)
 {
 	if (str.length() > 6) return false;
@@ -22,8 +27,7 @@ bool Password::Verify(std::string& str)
 			}
 			else 
 			{
-				
-				if (countSame > 1 && countSame % 2 == 0 && countSame / 2 == 1)
+				if (boundarycheck(countSame))
 					retCountSame = true;
 				countSame = 1;
 			}
@@ -31,7 +35,7 @@ bool Password::Verify(std::string& str)
 		}
 		prev = val;
 	}
-	if (countSame > 1 && countSame % 2 == 0 && countSame / 2 == 1)
+	if (boundarycheck(countSame))
 		retCountSame = true;
 
 	return retSameAsPrevious & retSameOrHigher & retCountSame;
