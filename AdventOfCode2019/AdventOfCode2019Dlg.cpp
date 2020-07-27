@@ -15,6 +15,8 @@
 #include "IntcodeProcessor.h"
 #include "CrossedWires.h"
 
+#include "Password.h"
+
 #include "Generic.h"
 
 #ifdef _DEBUG
@@ -78,6 +80,7 @@ BEGIN_MESSAGE_MAP(CAdventOfCode2019Dlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CAdventOfCode2019Dlg::OnBnClickedOk)
 	ON_BN_CLICKED(btn_ProcessIntcode, &CAdventOfCode2019Dlg::OnBnClickedProcessintcode)
 	ON_BN_CLICKED(IDC_BUTTON1, &CAdventOfCode2019Dlg::OnBnClickedButton1)
+	ON_BN_CLICKED(IDC_BUTTON2, &CAdventOfCode2019Dlg::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -239,4 +242,19 @@ void CAdventOfCode2019Dlg::OnBnClickedButton1()
 
 }
 
+void CAdventOfCode2019Dlg::OnBnClickedButton2()
+{
+	int lowBoundary = 171309;
+	int highBoundary = 643603;
+	int count = 0;
+	for (int i = lowBoundary; i < highBoundary; ++i)
+	{
+		Password p;
+		if (p.Verify(std::to_string(i))) 
+			++count;
+	}
+	CStringW t;
+	t.Format(L"%d", count);
+	SetDlgItemTextW(txtPasswordRetries, t);
 
+}

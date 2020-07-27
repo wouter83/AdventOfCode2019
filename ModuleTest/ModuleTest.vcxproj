@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="1202_Test.cpp" />
     <ClCompile Include="CrossedWiresTest.cpp" />
+    <ClCompile Include="PasswordTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
