@@ -268,7 +268,8 @@ void CAdventOfCode2019Dlg::OnBnClickedButton3()
 	std::vector<int> tmp;
 	for (unsigned int k = 0; k < size; ++k)
 		tmp.push_back(Intcode_D5[k]);
-	int input = 1;
+
+	int input = 5;
 	std::vector<int> output;
 	int procres = Process::process(tmp, output, input);
 	if (procres == 0)
